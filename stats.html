@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>إحصائيات</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>الإحصائيات</h1>
+  <div id="stats"></div>
+
+  <script>
+    const statsDiv = document.getElementById("stats");
+    const sales = JSON.parse(localStorage.getItem("sales")) || [];
+
+    let totalSales = 0;
+    let totalProfit = 0;
+    let monthlySales = 0;
+    let monthlyProfit = 0;
+    let month = new Date().getMonth();
+
+    for (const s of sales) {
+      const saleDate = new Date(s.date);
+      totalSales += s.price * s.quantity;
+      totalProfit += s.profit * s.quantity;
+      if (saleDate.getMonth() === month) {
+        monthlySales += s.price * s.quantity;
+        monthlyProfit += s.profit * s.quantity;
+      }
+    }
+
+    statsDiv.innerHTML = `
+      <p>إجمالي المبيعات: ${totalSales} ل.س</p>
+      <p>إجمالي الأرباح: ${totalProfit} ل.س</p>
+      <hr>
+      <p>مبيعات هذا الشهر: ${monthlySales} ل.س</p>
+      <p>أرباح هذا الشهر: ${monthlyProfit} ل.س</p>
+    `;
+  </script>
+</body>
+</html>
