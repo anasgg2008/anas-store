@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>إدارة المنتجات</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>إدارة المنتجات</h1>
+  <form id="add-product">
+    <input type="text" id="product-name" placeholder="اسم الغرض" required>
+    <input type="number" id="buy-price" placeholder="سعر الشراء" required>
+    <input type="number" id="stock" placeholder="العدد" required>
+    <button type="submit">إضافة</button>
+  </form>
+
+  <div id="products-list"></div>
+
+  <script>
+    const form = document.getElementById("add-product");
+    const nameInput = document.getElementById("product-name");
+    const buyInput = document.getElementById("buy-price");
+    const stockInput = document.getElementById("stock");
+    const list = document.getElementById("products-list");
+
+    let products = JSON.parse(localStorage.getItem("products")) || {};
+
+    function renderProducts() {
+      list.innerHTML = "";
+      for (let key in products) {
+        const p = products[key];
+        list.innerHTML += `<p>${key} - سعر الشراء: ${p.buyPrice} - متبقي: ${p.stock}</p>`;
+      }
+    }
+
+    form.onsubmit = (e) => {
+      e.preventDefault();
+      const name = nameInput.value.trim();
+      const buyPrice = parseInt(buyInput.value);
+      const stock = parseInt(stockInput.value);
+
+      if (!name || buyPrice <= 0 || stock <= 0) return;
+
+      if (products[name]) {
+        products[name].stock += stock;
+      } else {
+        products[name] = { buyPrice, stock };
+      }
+
+      localStorage.setItem("products", JSON.stringify(products));
+      nameInput.value = "";
+      buyInput.value = "";
+      stockInput.value = "";
+      renderProducts();
+    };
+
+    renderProducts();
+  </script>
+</body>
+</html>
