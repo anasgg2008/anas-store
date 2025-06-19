@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>واجهة البيع</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>واجهة البيع</h1>
+  <form id="sale-form">
+    <input type="text" id="product" placeholder="اسم الغرض" required>
+    <input type="number" id="quantity" placeholder="العدد" required>
+    <input type="number" id="price" placeholder="السعر" required>
+    <button type="submit">احفظ</button>
+  </form>
+  <div id="sale-info">
+    <p>عدد الأغراض المباعة: <span id="items-count">0</span></p>
+    <p>إجمالي المبيعات: <span id="daily-sales">0</span> ل.س</p>
+    <p>الربح الصافي: <span id="daily-profit">0</span> ل.س</p>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
